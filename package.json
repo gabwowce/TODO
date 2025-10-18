@@ -1,7 +1,5 @@
 {
     "name": "todo",
-    "homepage": "https://https://gabwowce.github.io/TODO/",
-
     "private": true,
     "version": "0.0.0",
     "type": "module",
