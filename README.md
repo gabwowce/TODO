@@ -1,4 +1,5 @@
 # TODO – paprasta, greita ir responsyvi užduočių aplikacija
+[Gyva demonstracija](https://gabwowce.github.io/TODO/)
 
 TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`), pritaikyta mobile, konfeti efektas kai užduotis pažymima kaip atlikta.
 
@@ -35,6 +36,7 @@ TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`)
 - **Clear done:** pašalina visas atliktas užduotis aktyviame aplanke.
 - **Užduoties informacija:** dešinėje – pastovi panelė; mobile – „sheet“ iš dešinės.
 - **Temos perjungimas:** šviesi / tamsi tema (ThemeToggle).
+- Būsena išsaugoma naršyklėje per `localStorage`, kad uždarius/atvėrus puslapį duomenys išliktų.
 
 ---
 
