@@ -33,7 +33,7 @@ TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`)
 - **Filtrai:** `all | active | done`.
 - **Paieška:** realaus laiko filtras pagal pavadinimą.
 - **Clear done:** pašalina visas atliktas užduotis aktyviame aplanke.
-- **Užduoties informacija:** dešinėje – pastovi panelė; mobiliai – „sheet“ iš dešinės.
+- **Užduoties informacija:** dešinėje – pastovi panelė; mobile – „sheet“ iš dešinės.
 - **Temos perjungimas:** šviesi / tamsi tema (ThemeToggle).
 
 ---
@@ -45,7 +45,7 @@ TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`)
 - **Logika hookuose** (UI komponentai):
   - `useTodo()` – prieiga prie globalios būsenos ir `dispatch`.
   - `useTaskActions(taskId)` – su konkrečia užduotimi susiję veiksmai (`toggle`, `update`, `remove`, `select`, `deselect`).
-  - `useTaskDetails(selectedId)` – redagavimo būsena (tekstai, „Saved ✓“, konfeti, statuso spalvos).
+  - `useTaskDetails(selectedId)` – redagavimo būsena (tekstai, „Saved ✓“, konfeti).
   - `useConfettiRain()` – canvas animacijos logika.
 - **Komponentų sluoksniai:**
   - `TopBar` (`SearchBar`, `FilterBar`, `ThemeToggle`, `ClearDoneButton`)
@@ -69,16 +69,4 @@ export const initial = {
     selectedTaskId: "",
   },
 };
-```
-
-**Užduoties objektas**
-
-```ts
-{
-  id: string;
-  folderId: string;
-  title: string;
-  done: boolean;
-  createdAt: number; // Date.now()
-}
 ```
