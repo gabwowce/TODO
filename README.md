@@ -1,17 +1,84 @@
-# React + Vite
+# TODO – paprasta, greita ir responsyvi užduočių aplikacija
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`), pritaikyta mobile, konfeti efektas kai užduotis pažymima kaip atlikta.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Diegimas
 
-## React Compiler
+1. Gauk kodą
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+   ```bash
+   git clone https://github.com/gabwowce/TODO
+   ```
 
-## Expanding the ESLint configuration
+2. Įdiek priklausomybes
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# TODO" 
+   ```bash
+   npm install
+   ```
+
+3. Paleisk vystymo režimu (Vite)
+   ```bash
+   npm run dev
+   ```
+   Atverk terminale nurodytą adresą (pvz., http://localhost:5173).
+
+---
+
+## Funkcionalumas
+
+- **Aplankai (Folders):** `Inbox` + sukurti aplankai (galima: kurti, pervadinti, trinti).
+- **Užduotys (Tasks):** kurti, `Done/Active` perjungimas, trinti.
+- **Filtrai:** `all | active | done`.
+- **Paieška:** realaus laiko filtras pagal pavadinimą.
+- **Clear done:** pašalina visas atliktas užduotis aktyviame aplanke.
+- **Užduoties informacija:** dešinėje – pastovi panelė; mobiliai – „sheet“ iš dešinės.
+- **Temos perjungimas:** šviesi / tamsi tema (ThemeToggle).
+
+---
+
+## Technologijos ir architektūra
+
+- **React + Vite**.
+- **Globali būsena:** `useReducer` + Context (`TodoProvider`).
+- **Logika hookuose** (UI komponentai):
+  - `useTodo()` – prieiga prie globalios būsenos ir `dispatch`.
+  - `useTaskActions(taskId)` – su konkrečia užduotimi susiję veiksmai (`toggle`, `update`, `remove`, `select`, `deselect`).
+  - `useTaskDetails(selectedId)` – redagavimo būsena (tekstai, „Saved ✓“, konfeti, statuso spalvos).
+  - `useConfettiRain()` – canvas animacijos logika.
+- **Komponentų sluoksniai:**
+  - `TopBar` (`SearchBar`, `FilterBar`, `ThemeToggle`, `ClearDoneButton`)
+  - `TaskList` → `TaskRow` (išskaidyta į `TaskCheckbox`, `TaskTitle`, `DeleteButton`)
+  - `TaskDetails` (sudarytas iš `TaskHeader`, `TaskEditor`, `TaskFooterActions`)
+  - `TaskDetailsResponsive` – vienas komponentas desktop panelėms ir mobiliam „sheet“
+  - `Sidebar` / `MobileSidebar`
+
+---
+
+## Būsenos schema
+
+```ts
+export const initial = {
+  folders: [{ id: "inbox", name: "Inbox", icon: "inbox" }],
+  tasks: [], // { id, folderId, title, done, createdAt }
+  activeFolderId: "inbox",
+  ui: {
+    query: "",
+    filter: "all", // "all" | "active" | "done"
+    selectedTaskId: "",
+  },
+};
+```
+
+**Užduoties objektas**
+
+```ts
+{
+  id: string;
+  folderId: string;
+  title: string;
+  done: boolean;
+  createdAt: number; // Date.now()
+}
+```

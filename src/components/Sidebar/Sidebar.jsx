@@ -26,7 +26,7 @@ export default function Sidebar() {
             active={state.activeFolderId === inbox.id}
             count={getCount(inbox.id)}
             onSelect={onSelect}
-            menuItems={[]} // Inbox be meniu
+            menuItems={[]}
           />
         )}
       </div>

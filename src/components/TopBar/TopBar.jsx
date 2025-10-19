@@ -2,22 +2,31 @@ import { useMemo } from "react";
 import { RiMenuLine } from "react-icons/ri";
 import { useTodo } from "../../hooks/useTodo";
 import ClearDoneButton from "./ClearDoneButton";
-import FilterPills from "./FilterPills";
-import SearchInput from "./SearchInput";
+import FilterBar from "./FilterBar";
+import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
 
 export default function TopBar({ onOpenSidebar }) {
   const { state, dispatch } = useTodo();
+
   const doneCount = useMemo(() => {
     const fid = state.activeFolderId;
     return state.tasks.filter((t) => t.folderId === fid && t.done).length;
   }, [state.tasks, state.activeFolderId]);
+  const activeFolder = state.folders.find((f) => f.id === state.activeFolderId);
+  const folderName = activeFolder?.name;
+
+  const clearDone = () => {
+    if (!doneCount) return;
+    const ok = window.confirm(`Clear done tasks in „${folderName}“ folder?`);
+    if (!ok) return;
+    dispatch({ type: "CLEAR_DONE_TASKS", folderId: state.activeFolderId });
+  };
 
   return (
-    <>
-      {/* ===== MOBILE (<md) ===== */}
+    <div className="flex-1">
+      {/* MOBILE*/}
       <div className="flex md:hidden flex-col gap-2">
-        {/* viršutinė eilutė: hamburger | TODO | veiksmai */}
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenSidebar}
@@ -31,66 +40,28 @@ export default function TopBar({ onOpenSidebar }) {
           <span className="text-lg font-bold">TODO</span>
 
           <div className="ml-auto flex items-center gap-2">
-            <ClearDoneButton
-              count={doneCount}
-              onClear={() =>
-                dispatch({
-                  type: "CLEAR_DONE_TASKS",
-                  folderId: state.activeFolderId,
-                })
-              }
-            />
+            <ClearDoneButton count={doneCount} onClear={clearDone} />
             <ThemeToggle />
           </div>
         </div>
-
-        {/* paieška + filtrai (pilnas plotis, filtrai ne tempiasi per visą) */}
-        <div className="w-full">
-          <SearchInput
-            value={state.ui?.query ?? ""}
-            onChange={(q) => dispatch({ type: "SET_QUERY", query: q })}
-            onClear={() => dispatch({ type: "SET_QUERY", query: "" })}
-          />
-          <div className="mt-2 w-full flex justify-center">
-            <div className="inline-flex items-center gap-2 overflow-x-auto no-scrollbar px-1 mt-2">
-              <FilterPills
-                value={state.ui.filter}
-                onChange={(f) => dispatch({ type: "SET_FILTER", filter: f })}
-              />
-            </div>
-          </div>
+        <SearchBar />
+        <div className="flex justify-center">
+          <FilterBar />
         </div>
       </div>
 
-      {/* ===== DESKTOP (≥md) — PALIKTA KAIP BUVO ===== */}
-      <div className="hidden md:flex items-center gap-3">
+      {/* DESKTOP */}
+      <div className="hidden md:flex items-center justify-between gap-3">
         <span className="text-lg font-bold">TODO</span>
 
-        <div className="flex-1 flex gap-5 justify-center">
-          <SearchInput
-            value={state.ui?.query ?? ""}
-            onChange={(q) => dispatch({ type: "SET_QUERY", query: q })}
-            onClear={() => dispatch({ type: "SET_QUERY", query: "" })}
-          />
-
-          <FilterPills
-            value={state.ui.filter}
-            onChange={(f) => dispatch({ type: "SET_FILTER", filter: f })}
-          />
-
-          <ClearDoneButton
-            count={doneCount}
-            onClear={() =>
-              dispatch({
-                type: "CLEAR_DONE_TASKS",
-                folderId: state.activeFolderId,
-              })
-            }
-          />
+        <div className="flex-1 flex flex-row justify-center items-center gap-2">
+          <SearchBar />
+          <FilterBar />
+          <ClearDoneButton count={doneCount} onClear={clearDone} />
         </div>
 
         <ThemeToggle />
       </div>
-    </>
+    </div>
   );
 }

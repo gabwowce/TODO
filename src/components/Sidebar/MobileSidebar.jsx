@@ -1,11 +1,10 @@
-// src/components/Sidebar/MobileSidebar.jsx
 import { useEffect, useRef } from "react";
 import { useTodo } from "../../hooks/useTodo";
 import Sidebar from "./Sidebar";
 
 export default function MobileSidebar({ open, onClose }) {
   const { state } = useTodo();
-  const activeId = state.activeFolderId; // ← kas pasikeis pasirenkant iš meniu
+  const activeId = state.activeFolderId;
   const prevIdRef = useRef(activeId);
 
   // Uždaryk, kai aktyvus folderis pasikeičia (vartotojas pasirinko iš sidebaro)
@@ -17,14 +16,6 @@ export default function MobileSidebar({ open, onClose }) {
     if (prevIdRef.current !== activeId) onClose?.();
     prevIdRef.current = activeId;
   }, [activeId, open, onClose]);
-
-  // Esc uždarymas
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e) => e.key === "Escape" && onClose?.();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
 
   return (
     <>

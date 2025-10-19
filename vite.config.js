@@ -3,6 +3,6 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/TODO/", // <- jei repo pavadinimas "TODO"
+  base: "/TODO/",
   plugins: [react(), tailwindcss()],
 });

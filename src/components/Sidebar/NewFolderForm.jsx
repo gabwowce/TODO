@@ -24,7 +24,7 @@ export default function NewFolderForm({ onAdd, placeholder = "New Folder" }) {
 
         <Button
           onClick={submit}
-          disabled={canAdd} // <- teisinga logika
+          disabled={canAdd}
           aria-disabled={canAdd}
           title="Add folder"
         >

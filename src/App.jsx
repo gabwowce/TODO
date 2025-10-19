@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import TodoProvider from "../src/app/TodoProvider";
+import { useState } from "react";
+import TodoProvider from "./app/TodoProvider";
 import MobileSidebar from "./components/Sidebar/MobileSidebar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import NewTaskBar from "./components/Tasks/NewTaskBar";
-import TaskDetails from "./components/Tasks/TaskDetails";
-import TaskDetailsSheet from "./components/Tasks/TaskDetailsSheet";
+import TaskDetailsResponsive from "./components/Tasks/TaskDetailsResponsive";
 import TaskList from "./components/Tasks/TaskList";
 import TopBar from "./components/TopBar/TopBar";
 import { useTodo } from "./hooks/useTodo";
@@ -14,56 +13,36 @@ function Shell() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const activeFolder = state.folders.find((f) => f.id === state.activeFolderId);
 
-  // body scroll lock kai atidarytas
-  useEffect(() => {
-    if (!sidebarOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [sidebarOpen]);
-
   return (
-    <div className="h-screen overflow-hidden flex flex-col">
-      {/* Header su hamburger (tik <md) */}
-      <header className="flex items-center gap-3 px-6 py-3 border-b border-[var(--border)] bg-[var(--card)]">
-        <div className="flex-1">
+    <div className="h-dvh overflow-hidden flex flex-col">
+      <div className="flex-1 min-h-0 flex flex-col overflow-y-auto md:overflow-y-hidden">
+        <header className="flex items-center gap-3 px-6 py-3 border-b border-[var(--border)] bg-[var(--card)]">
           <TopBar onOpenSidebar={() => setSidebarOpen(true)} />
-        </div>
-      </header>
+        </header>
 
-      <div className="flex-1 min-h-0 flex">
-        {/* Desktop sidebar (≥md) */}
-        <aside className="hidden md:block flex-none w-[280px] border-r border-[var(--border)] bg-[var(--card)] p-4">
-          <Sidebar />
-        </aside>
+        <div className="flex-1 min-h-0 md:flex">
+          <aside className="hidden md:block flex-none w-[280px] border-r border-[var(--border)] bg-[var(--card)] p-4">
+            <Sidebar />
+          </aside>
 
-        {/* Main */}
-        <main className="relative flex-1 min-w-0 min-h-0">
-          <div className="min-h-0 overflow-y-auto">
-            <div className="p-6 space-y-4">
-              <div className="sticky top-0 z-10 bg-[var(--bg)]/90 backdrop-blur pb-3 pt-2">
+          <main className="flex-1 min-w-0 min-h-0 flex">
+            <section className="flex-1 min-h-0 min-w-0 flex flex-col">
+              <div className="sticky top-0 z-10 bg-[var(--bg)]/90 backdrop-blur pb-3 pt-2 px-6">
                 <h1 className="text-xl font-semibold">{activeFolder?.name}</h1>
                 <NewTaskBar />
               </div>
+
               <TaskList />
-              <div className="h-12" />
-            </div>
-          </div>
-        </main>
+            </section>
 
-        {/* ≥lg pastovi dešinė panelė */}
-        <aside className="hidden lg:block w-[420px] border-l border-[var(--border)] bg-[var(--bg)]">
-          <TaskDetails />
-        </aside>
+            <TaskDetailsResponsive />
 
-        {/* Mobilus sidebar <md */}
-        <MobileSidebar
-          open={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-        />
-        <TaskDetailsSheet />
+            <MobileSidebar
+              open={sidebarOpen}
+              onClose={() => setSidebarOpen(false)}
+            />
+          </main>
+        </div>
       </div>
     </div>
   );

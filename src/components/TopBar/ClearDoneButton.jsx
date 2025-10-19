@@ -12,7 +12,7 @@ export default function ClearDoneButton({ count = 0, onClear }) {
       title="Clear completed tasks in active folder"
     >
       <RiDeleteBinLine className="text-lg" />
-      <span className="hidden sm:inline">Clear done</span>
+      <span className="hidden md:inline text-nowrap">Clear done</span>
       {!!count && <CountPill count={count} color="primary" />}
     </button>
   );

@@ -15,7 +15,6 @@ export default function NewTaskBar() {
 
   return (
     <div className="flex items-center gap-2 w-full py-2">
-      {/* KORTA IŠSIPLETĖ PER VISĄ LIEKANČIĄ ERDVĘ */}
       <div className="flex-1 flex items-center gap-3  h-12 pl-3 pr-2">
         <div className="shrink-0 w-6 h-6 rounded-full bg-[var(--primary)]/15 flex items-center justify-center">
           <RiAddLine
@@ -24,8 +23,6 @@ export default function NewTaskBar() {
           />
           <span className="sr-only">Add task</span>
         </div>
-
-        {/* INPUT PILNAI PLEČIASI */}
         <input
           className="flex-1 input min-w-0 w-full bg-transparent outline-none placeholder:text-[var(--muted)]"
           placeholder="Add a new task… (Press Enter)"
