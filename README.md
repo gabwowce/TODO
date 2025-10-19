@@ -6,7 +6,7 @@ TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`)
 
 ## Demo
 
-Gyva versija: https://gabwowce.github.io/TODO/
+Live demo: https://gabwowce.github.io/TODO/
 
 ---
 
