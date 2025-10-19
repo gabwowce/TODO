@@ -40,7 +40,7 @@ TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`)
 
 ## Technologijos ir architektūra
 
-- **React + Vite**.
+- **React + Vite + Tailwind**.
 - **Globali būsena:** `useReducer` + Context (`TodoProvider`).
 - **Logika hookuose** (UI komponentai):
   - `useTodo()` – prieiga prie globalios būsenos ir `dispatch`.
