@@ -1,4 +1,12 @@
 export default function TaskHeader({ isDone, createdAt, statusStyle }) {
+  const d = createdAt
+    ? new Date(
+        typeof createdAt === "number" && createdAt < 1e12
+          ? createdAt * 1000
+          : createdAt
+      )
+    : null;
+
   return (
     <div className="p-4 border-b border-[var(--border)] bg-[var(--card)]">
       <div className="flex items-center gap-3 text-sm">
@@ -8,9 +16,10 @@ export default function TaskHeader({ isDone, createdAt, statusStyle }) {
         >
           {isDone ? "Done" : "Active"}
         </span>
-        {createdAt && (
+
+        {d && !Number.isNaN(d.getTime()) && (
           <span className="text-[var(--muted)]">
-            • Created: {createdAt.toLocaleString()}
+            • Created: {d.toLocaleString()}
           </span>
         )}
       </div>
