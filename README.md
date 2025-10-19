@@ -1,7 +1,12 @@
 # TODO – paprasta, greita ir responsyvi užduočių aplikacija
-[Gyva demonstracija](https://gabwowce.github.io/TODO/)
 
 TODO aplikacija su aplankais, paieška ir filtravimu (`all` / `active` / `done`), pritaikyta mobile, konfeti efektas kai užduotis pažymima kaip atlikta.
+
+---
+
+## Demo
+
+Gyva versija: https://gabwowce.github.io/TODO/
 
 ---
 
